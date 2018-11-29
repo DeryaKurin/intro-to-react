@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title>Props and State</title>
+  </head>
+  <body>
+
+    <div id="app"></div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.1.0/umd/react.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.1.0/umd/react-dom.development.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
+
+    <script type="text/babel">
+
+      class Student extends React.Component {
+        constructor(props){
+           super(props);
+           this.state = {
+             name: 'Derya O. Kurin',
+             week: 4,
+             checkpoint: 'Props and State'
+           }
+         }
+        render() {
+          return (
+            <div>
+              <h3>{this.props.subject}</h3>
+              <h4>Student Name: {this.state.name}</h4>
+              <h4>Current Checkpoint: {this.state.checkpoint}</h4>
+              <h4>Current week: {this.state.week}</h4>
+              <h4>Current Day: {this.props.day}</h4>
+              <h4>Current Time: {this.props.hour}</h4>
+            </div>
+          );
+        }
+      }
+
+      Student.defaultProps = {
+        subject: "Student Information"
+      }
+      var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+      var date = new Date();
+      const time = {
+        day: days[date.getDay()],
+        hour: date.getHours()
+      }
+
+      ReactDOM.render(
+        <Student
+          day={time.day}
+          hour={time.hour}/> ,document.getElementById('app')
+      );
+
+    </script>
+  </body>
+</html>

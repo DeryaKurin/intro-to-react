@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <title>Props and State</title>
+</head>
+
+<body>
+
+  <div id="app"></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react/16.1.0/umd/react.development.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/react-dom/16.1.0/umd/react-dom.development.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.34/browser.min.js"></script>
+  <script type="text/babel">
+
+      class Clock extends React.Component {
+        constructor(props) {
+          super(props);
+          this.state = {date: new Date()};
+        }
+
+        componentDidMount() {
+          this.timerID = setInterval(
+            () => this.tick(),
+            1000
+          );
+        }
+
+        componentWillUnmount() {
+          clearInterval(this.timerID);
+        }
+
+        tick() {
+          this.setState({
+            date: new Date()
+          });
+        }
+
+        render() {
+          return (
+            <div>
+              <h4>Current Time: {this.state.date.toLocaleTimeString()}</h4>
+            </div>
+          );
+        }
+      }
+
+
+      class Student extends React.Component {
+        constructor(props){
+           super(props);
+           this.state = {
+             number: 1,
+             name: 'Derya O. Kurin',
+             week: 4,
+             checkpoint: 'Props and State'
+           }
+         }
+
+         increment(event) {
+           this.setState({
+             number: this.state.number + 1
+           })
+         }
+
+         decrement(event) {
+           this.setState({
+             number: Math.max(1, this.state.number - 1)
+           })
+         }
+
+
+        render() {
+          return (
+                  <div>
+                    <h3>Current Number: {this.state.number}</h3>
+                    <h3>{this.props.subject}</h3>
+                    <h4>Student Name: {this.state.name}</h4>
+                    <h4>Current Checkpoint: {this.state.checkpoint}</h4>
+                    <h4>Current week: {this.state.week}</h4>
+                    <h4>Current Day: {this.props.day}</h4>
+
+                    <Clock />
+                    <button onClick={this.increment.bind(this)}>Increment</button>
+                    <button onClick={this.decrement.bind(this)}>Decrement</button>
+                  </div>
+            );
+          }
+        }
+
+      Student.defaultProps = {
+        subject: "Student Information"
+      }
+
+      var days = ['Sunday','Monday','Tuesday','Wednesday','Thursday','Friday','Saturday'];
+      const date = new Date();
+      const day = days[date.getDay()];
+
+
+      ReactDOM.render(
+        <Student
+          day={day} date={date} />, document.getElementById('app')
+        );
+
+
+    </script>
+</body>
+
+</html>
